@@ -25,10 +25,11 @@
 defined('MOODLE_INTERNAL') || die();
 
 $settings->add(new admin_setting_heading('sampleheader',
-                                         get_string('headerconfig', 'block_easygrade'),
-                                         get_string('descconfig', 'block_easygrade')));
+    get_string('headerconfig', 'block_easygrade'),
+    get_string('descconfig', 'block_easygrade')));
 
 $settings->add(new admin_setting_configcheckbox('easygrade/foo',
-                                                get_string('labelfoo', 'block_easygrade'),
-                                                get_string('descfoo', 'block_easygrade'),
-                                                '0'));
+    get_string('labelfoo', 'block_easygrade'),
+    get_string('descfoo', 'block_easygrade'),
+    '0')
+);

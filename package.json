@@ -1,0 +1,18 @@
+{
+  "name": "Easy-Grade",
+  "version": "1.0.0",
+  "description": "Easy grade for Moodle",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://yue_yae@bitbucket.org/yue_yae/moodle-block_easygrade.git"
+  },
+  "keywords": [
+    "Moodle"
+  ],
+  "author": "Takayuki Fuwa",
+  "devDependencies": {
+    "grunt-bower-task": "^0.4.0",
+    "grunt-contrib-uglify": "^0.9.1"
+  }
+}

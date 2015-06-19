@@ -1,4 +1,5 @@
 <?php
+
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -15,25 +16,18 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * easygrade block caps.
+ * Strings for component 'block_easygrade', language 'en'
  *
  * @package   block_easygrade
  * @copyright Daniel Neis <danielneis@gmail.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
-$capabilities = array(
-    'block/easygrade:addinstance' => array(
-        'riskbitmask' => RISK_SPAM | RISK_XSS,
-        'captype' => 'write',
-        'contextlevel' => CONTEXT_BLOCK,
-        'archetypes' => array(
-            'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        ),
-
-        'clonepermissionsfrom' => 'mod/assign:grade'
-    ),
-);
+$string['blockstring'] = 'Block string';
+$string['descconfig'] = 'Description of the config section';
+$string['descfoo'] = 'Config description';
+$string['headerconfig'] = 'Config section header';
+$string['labelfoo'] = 'Config label';
+$string['easygrade:addinstance'] = 'かんたん評定を追加';
+$string['easygrade:myaddinstance'] = 'かんたん評定を追加';
+$string['pluginname'] = 'かんたん評定';

@@ -47,26 +47,16 @@ class block_easygrade extends block_base {
         $this->content->icons = array();
         $this->content->footer = '';
 
-        // user/index.php expect course context, so get one if page has module context.
-        $currentcontext = $this->page->context->get_course_context(false);
+        $courseid = $this->page->course->id;
+        $context = context_course::instance($courseid);
 
-        if (! empty($this->config->text)) {
-            $this->content->text = $this->config->text;
+        if(has_capability("moodle/grade:viewall", $context)){
+            $html = html_writer::link(new moodle_url($CFG->wwwroot . "/blocks/easygrade/index.php", ["courseid" => $courseid]), "かんたん評点を起動する", ["class" => "btn btn-success"]);
+        }else{
+            $html = "";
         }
 
-        $this->content = '';
-        if (empty($currentcontext)) {
-            return $this->content;
-        }
-        if ($this->page->course->id == SITEID) {
-            $this->context->text .= "site context";
-        }
-
-        if (! empty($this->config->text)) {
-            $this->content->text .= $this->config->text;
-        }
-
-        return $this->content;
+        return $this->content = (object)['text' => $html];
     }
 
     // my moodle can only have SITEID and it's redundant here, so take it away
