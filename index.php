@@ -17,7 +17,6 @@ $context = \context_course::instance($courseid);
 require_capability('moodle/grade:viewall', $context, $USER->id);
 
 $course = get_course($courseid);
-$assignObj = new assign();
 
 $PAGE->set_context($context);
 echo \html_writer::start_tag('html');
@@ -32,12 +31,15 @@ echo \html_writer::start_tag('body');
 echo \html_writer::start_div("container");
 
 echo \html_writer::tag("h1", "コース(" . s($course->fullname) . ")内の課題一覧");
+
+echo \html_writer::start_tag("form", ["method" => "post", "action" => "do_submit.php"]);
+
 echo \html_writer::start_tag("table", ["class" => "table"]);
 echo \html_writer::start_tag("tr");
 echo \html_writer::tag("th", "小テスト名");
 echo \html_writer::tag("th", "-");
 echo \html_writer::end_tag("tr");
-$assigns = $assignObj->assigns();
+$assigns = get_all_instances_in_course("assign", $course);
 foreach ($assigns as $assign) {
     echo \html_writer::start_tag("tr");
     echo \html_writer::tag("td", $assign->name);
@@ -47,6 +49,7 @@ foreach ($assigns as $assign) {
     echo \html_writer::end_tag("tr");
 }
 echo \html_writer::end_tag("table");
+echo \html_writer::end_tag("form");
 
 echo \html_writer::end_div();
 
