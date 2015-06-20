@@ -14,7 +14,6 @@ require_login();
 global $USER, $CFG, $PAGE, $OUTPUT;
 
 $courseid = required_param('courseid', PARAM_INT);
-$assignid = required_param("assignid", PARAM_INT);
 $cmid = required_param("cmid", PARAM_INT);
 
 $cm = get_coursemodule_from_id("assign", $cmid);
@@ -51,8 +50,9 @@ echo \html_writer::end_tag('nav');
 
 echo \html_writer::start_div("container");
 
+echo \html_writer::start_div("row");
+echo \html_writer::start_div("col-md-12");
 echo \html_writer::tag("h1", "コース(" . s($course->fullname) . ")内の課題一覧");
-
 echo \html_writer::start_tag("ol", ["class" => "breadcrumb"]);
 echo \html_writer::start_tag("li");
 echo \html_writer::link(new \moodle_url("index.php", ["courseid" => $course->id]), "トップ(" . s($course->fullname) . ")");
@@ -63,10 +63,12 @@ echo \html_writer::end_tag("li");
 echo \html_writer::end_tag("ol");
 
 echo \html_writer::start_div();
-echo \html_writer::link("", "チェックをつけた提出課題に満点を付ける", ["id" => "set_maxgrade", "class" => "btn btn-success col-md-offset-9"]);
+echo \html_writer::tag("button", "チェックをつけた提出課題に満点を付ける",
+    ["id" => "set_maxgrade", "class" => "btn btn-success"]);
 echo \html_writer::end_div();
 echo \html_writer::empty_tag("hr");
 
+echo \html_writer::start_tag("form", ["action" => "ajax_grade.php", "method" => "post"]);
 echo \html_writer::start_tag("table", ["class" => "table table-bordered"]);
 echo \html_writer::start_tag("tr");
 echo \html_writer::tag("th", "");
@@ -77,36 +79,67 @@ echo \html_writer::tag("th", "オンラインテキスト");
 echo \html_writer::tag("th", "100点中の評点");
 echo \html_writer::end_tag("tr");
 $users = $assignObj->users();
-foreach($users as $user){
+foreach ($users as $user) {
     $user_submission = $assignObj->get_user_submission($user->id, false);
     $onlinetext = $assignObj->get_onlinetext_submission($user_submission->id);
     $grade = $assignObj->get_user_grade($user->id, true);
-    if((int)$grade->grade == -1){
+    if ((int)$grade->grade == -1) {
         $grade->grade = "";
     }
     echo \html_writer::start_tag("tr");
     echo \html_writer::tag("td", \html_writer::empty_tag("input", ["type" => "checkbox"]));
     echo \html_writer::tag("td",
         \html_writer::div($OUTPUT->user_picture($user,
-            ['size'=>40, 'class' => 'img-circle', "link" => false, "alttext" => false]),
+            ['size' => 40, 'class' => 'img-circle', "link" => false, "alttext" => false]),
             "profile-userpic")
     );
     echo \html_writer::tag("td", fullname($user));
     echo \html_writer::tag("td", $user->email);
-    echo \html_writer::tag("td",
-        \html_writer::div($onlinetext->onlinetext, "well"));
-    echo \html_writer::tag("td",
-        \html_writer::empty_tag("input",
-            ["type" => "text", "name" => "grade_" . $user->id, "value" => $grade->grade]));
+
+    if($user_submission && !$onlinetext){
+        echo \html_writer::tag("td",
+            \html_writer::div("未提出"));
+        echo \html_writer::tag("td", "(採点できません)");
+    }elseif($user_submission && $onlinetext) {
+        echo \html_writer::tag("td",
+            \html_writer::div($onlinetext->onlinetext));
+        echo \html_writer::tag("td",
+            \html_writer::empty_tag("input",
+                [
+                    "class" => "input_grade",
+                    "type" => "text",
+                    "name" => "grade_" . $user->id,
+                    "value" => $grade->grade,
+                    "userid" => $user->id,
+                    "courseid" => $courseid,
+                    "cmid" => $cmid
+                ])
+        );
+    }else{
+        echo \html_writer::tag("td",
+            \html_writer::div("オンラインテキスト以外"));
+        echo \html_writer::tag("td",
+            \html_writer::empty_tag("input",
+                ["type" => "text", "name" => "grade_" . $user->id, "value" => $grade->grade])
+        );
+    }
     echo \html_writer::end_tag("tr");
 }
 echo \html_writer::end_tag("table");
-echo \html_writer::link("", "保存する", ["class" => "col-md-offset-9 btn btn-success"]);
+echo \html_writer::end_div();
+
+echo \html_writer::link("#", "評点を保存する",
+    ["id" => "save_all", "class" => "col-md-offset-5 btn btn-success"]);
+echo \html_writer::end_tag("form");
+
+echo \html_writer::end_div();
 echo \html_writer::end_div();
 echo \html_writer::end_tag("body");
+
 
 //Script
 echo \html_writer::script(null, new \moodle_url($CFG->wwwroot . '/blocks/easygrade/js/jquery.min.js'));
 echo \html_writer::script(null, new \moodle_url($CFG->wwwroot . '/blocks/easygrade/js/bootstrap.min.js'));
+echo \html_writer::script(null, new \moodle_url($CFG->wwwroot . '/blocks/easygrade/js/grade.js'));
 echo \html_writer::end_tag('body');
 echo \html_writer::end_tag('html');

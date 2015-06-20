@@ -44,7 +44,7 @@ foreach ($assigns as $assign) {
     echo \html_writer::start_tag("tr");
     echo \html_writer::tag("td", $assign->name);
     echo \html_writer::tag("td",
-        \html_writer::link(new \moodle_url("grade.php", ["courseid" => $course->id, "assignid" => $assign->id, "cmid" => $assign->coursemodule]), "採点する", ["class" => "btn btn-success"])
+        \html_writer::link(new \moodle_url("grade.php", ["courseid" => $course->id, "cmid" => $assign->coursemodule]), "採点する", ["class" => "btn btn-success"])
     );
     echo \html_writer::end_tag("tr");
 }

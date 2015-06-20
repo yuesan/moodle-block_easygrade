@@ -18,10 +18,17 @@ class assign extends \assign
         return get_all_instances_in_course("assign", $this->course);
     }
 
+    /**
+     * コース内に登録されているユーザーを取得する。
+     *
+     * @return array
+     */
     public function users()
     {
-        return get_enrolled_users(self::get_context());
+        $users = get_enrolled_users(self::get_context());
+        return $users;
     }
+
 
     /**
      *
