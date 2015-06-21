@@ -18,18 +18,9 @@
  * easygrade block caps.
  *
  * @package    block_easygrade
- * @copyright  Daniel Neis <danielneis@gmail.com>
+ * @copyright  Takayuki Fuwa <fuwa@atware.co.jp>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$settings->add(new admin_setting_heading('sampleheader',
-    get_string('headerconfig', 'block_easygrade'),
-    get_string('descconfig', 'block_easygrade')));
-
-$settings->add(new admin_setting_configcheckbox('easygrade/foo',
-    get_string('labelfoo', 'block_easygrade'),
-    get_string('descfoo', 'block_easygrade'),
-    '0')
-);

@@ -18,19 +18,22 @@
  * easygrade block caps.
  *
  * @package    block_easygrade
- * @copyright  Daniel Neis <danielneis@gmail.com>
+ * @copyright  Takayuki Fuwa <fuwa@atware.co.jp>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-class block_easygrade extends block_base {
+class block_easygrade extends block_base
+{
 
-    function init() {
+    function init()
+    {
         $this->title = get_string('pluginname', 'block_easygrade');
     }
 
-    function get_content() {
+    function get_content()
+    {
         global $CFG, $OUTPUT;
 
         if ($this->content !== null) {
@@ -50,9 +53,9 @@ class block_easygrade extends block_base {
         $courseid = $this->page->course->id;
         $context = context_course::instance($courseid);
 
-        if(has_capability("moodle/grade:viewall", $context)){
+        if (has_capability("moodle/grade:viewall", $context)) {
             $html = html_writer::link(new moodle_url($CFG->wwwroot . "/blocks/easygrade/index.php", ["courseid" => $courseid]), "かんたん評点を起動する", ["class" => "btn btn-success"]);
-        }else{
+        } else {
             $html = "";
         }
 
@@ -60,27 +63,33 @@ class block_easygrade extends block_base {
     }
 
     // my moodle can only have SITEID and it's redundant here, so take it away
-    public function applicable_formats() {
+    public function applicable_formats()
+    {
         return array('all' => false,
-                     'site' => true,
-                     'site-index' => true,
-                     'course-view' => true, 
-                     'course-view-social' => false,
-                     'mod' => true, 
-                     'mod-quiz' => false);
+            'site' => true,
+            'site-index' => true,
+            'course-view' => true,
+            'course-view-social' => false,
+            'mod' => true,
+            'mod-quiz' => false);
     }
 
-    public function instance_allow_multiple() {
-          return true;
+    public function instance_allow_multiple()
+    {
+        return true;
     }
 
-    function has_config() {return true;}
+    function has_config()
+    {
+        return true;
+    }
 
-    public function cron() {
-            mtrace( "Hey, my cron script is running" );
-             
-                 // do something
-                  
-                      return true;
+    public function cron()
+    {
+        mtrace("Hey, my cron script is running");
+
+        // do something
+
+        return true;
     }
 }

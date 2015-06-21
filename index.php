@@ -14,7 +14,7 @@ global $USER, $CFG, $PAGE;
 $courseid = required_param('courseid', PARAM_INT);
 $context = \context_course::instance($courseid);
 
-require_capability('moodle/grade:viewall', $context, $USER->id);
+require_capability('mod/assign:grade', $context, $USER->id);
 
 $course = get_course($courseid);
 

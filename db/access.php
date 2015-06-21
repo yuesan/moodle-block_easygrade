@@ -18,7 +18,7 @@
  * easygrade block caps.
  *
  * @package   block_easygrade
- * @copyright Daniel Neis <danielneis@gmail.com>
+ * @copyright Takayuki Fuwa <fuwa@atware.co.jp>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
