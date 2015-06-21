@@ -20,7 +20,7 @@ $cm = get_coursemodule_from_id("assign", $cmid);
 $context = \context_course::instance($courseid);
 $cmcontext = \context_module::instance($cmid);
 
-require_capability('moodle/grade:viewall', $context, $USER->id);
+require_capability('mod/assign:grade', $context, $USER->id);
 
 $course = get_course($courseid);
 $assignObj = new assign($cmcontext, $cm, $course);

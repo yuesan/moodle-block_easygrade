@@ -3,6 +3,8 @@ namespace block_easygrade;
 
 require_once "../../mod/assign/locallib.php";
 
+defined('MOODLE_INTERNAL') || die();
+
 class assign extends \assign
 {
     private $course;
@@ -29,9 +31,8 @@ class assign extends \assign
         return $users;
     }
 
-
     /**
-     *
+     * オンラインテキストで提出された提出物を取得する。
      *
      * @param $submissionid
      *
