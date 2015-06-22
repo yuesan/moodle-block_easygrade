@@ -20,7 +20,6 @@ $("#save_all").click(function () {
             success : function(e){
                 var val = $.parseJSON(e);
                 if(val.result == "success"){
-                    console.log(val);
                     is_error = false;
                 }else{
                     is_error = true;
