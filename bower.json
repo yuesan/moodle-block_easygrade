@@ -15,7 +15,7 @@
     "bootstrap": {
       "js": "**/bootstrap.min.js",
       "css": "**/bootstrap.min.css",
-      "fonts" : "**/dist/fonts/*"
+      "fonts": "**/dist/fonts/*"
     },
     "jquery": {
       "js": "**/jquery.min.js"

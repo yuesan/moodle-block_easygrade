@@ -34,7 +34,7 @@ class block_easygrade extends block_base
 
     function get_content()
     {
-        global $CFG, $OUTPUT;
+        global $CFG;
 
         if ($this->content !== null) {
             return $this->content;
@@ -53,8 +53,12 @@ class block_easygrade extends block_base
         $courseid = $this->page->course->id;
         $context = context_course::instance($courseid);
 
-        if (has_capability("moodle/grade:viewall", $context)) {
-            $html = html_writer::link(new moodle_url($CFG->wwwroot . "/blocks/easygrade/index.php", ["courseid" => $courseid]), "かんたん評点を起動する", ["class" => "btn btn-success"]);
+        if (has_capability("mod/assign:grade", $context)) {
+            $html = html_writer::link(
+                new moodle_url($CFG->wwwroot . "/blocks/easygrade/index.php",
+                    ["courseid" => $courseid]),
+                "かんたん評点を起動する",
+                ["class" => "btn btn-success", 'target' => '_blank']);
         } else {
             $html = "";
         }
@@ -62,34 +66,30 @@ class block_easygrade extends block_base
         return $this->content = (object)['text' => $html];
     }
 
-    // my moodle can only have SITEID and it's redundant here, so take it away
     public function applicable_formats()
     {
-        return array('all' => false,
-            'site' => true,
-            'site-index' => true,
+        return array(
+            'all' => false,
+            'site' => false,
+            'site-index' => false,
             'course-view' => true,
             'course-view-social' => false,
-            'mod' => true,
-            'mod-quiz' => false);
+            'mod' => false
+        );
     }
 
     public function instance_allow_multiple()
     {
-        return true;
+        return false;
     }
 
     function has_config()
     {
-        return true;
+        return false;
     }
 
     public function cron()
     {
-        mtrace("Hey, my cron script is running");
-
-        // do something
-
         return true;
     }
 }

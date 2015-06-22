@@ -27,8 +27,7 @@ class assign extends \assign
      */
     public function users()
     {
-        $users = get_enrolled_users(self::get_context());
-        return $users;
+        return get_enrolled_users(self::get_context());
     }
 
     /**
@@ -40,7 +39,6 @@ class assign extends \assign
      */
     public function get_onlinetext_submission($submissionid) {
         global $DB;
-
         return $DB->get_record('assignsubmission_onlinetext', array('submission'=>$submissionid));
     }
 }

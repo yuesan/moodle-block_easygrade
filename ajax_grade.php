@@ -7,6 +7,7 @@ require_once __DIR__ . '/../../config.php';
 require_login();
 
 /* @var $USER object */
+/* @var $PAGE object */
 global $USER, $PAGE;
 
 $cmid = required_param("cmid", PARAM_INT);
@@ -19,7 +20,7 @@ $cm = get_coursemodule_from_id("assign", $cmid);
 $context = \context_course::instance($courseid);
 $cmcontext = \context_module::instance($cmid);
 
-require_capability('moodle/grade:viewall', $context, $USER->id);
+require_capability('mod/assign:grade', $context, $USER->id);
 
 $course = get_course($courseid);
 $assignObj = new assign($cmcontext, $cm, $course);
@@ -42,5 +43,13 @@ switch ($mode) {
             ];
             echo json_encode($return_r);
         }
+        break;
+
+    default :
+        $return_r = [
+            "result" => "error",
+            "reason" => "no method"
+        ];
+        echo json_encode($return_r);
         break;
 }

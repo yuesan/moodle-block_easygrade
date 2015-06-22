@@ -31,6 +31,7 @@ $capabilities = array(
         'contextlevel' => CONTEXT_BLOCK,
         'archetypes' => array(
             'editingteacher' => CAP_ALLOW,
+            'teacher' => CAP_ALLOW,
             'manager' => CAP_ALLOW
         ),
 

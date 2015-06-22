@@ -63,7 +63,7 @@ echo \html_writer::end_tag("li");
 echo \html_writer::end_tag("ol");
 
 echo \html_writer::start_div();
-echo \html_writer::tag("button", "チェックをつけた提出課題に満点を付ける",
+echo \html_writer::tag("button", "すべての提出課題に満点を付ける",
     ["id" => "set_maxgrade", "class" => "btn btn-success"]);
 echo \html_writer::end_div();
 echo \html_writer::empty_tag("hr");
@@ -71,7 +71,6 @@ echo \html_writer::empty_tag("hr");
 echo \html_writer::start_tag("form", ["action" => "ajax_grade.php", "method" => "post"]);
 echo \html_writer::start_tag("table", ["class" => "table table-bordered"]);
 echo \html_writer::start_tag("tr");
-echo \html_writer::tag("th", "");
 echo \html_writer::tag("th", "");
 echo \html_writer::tag("th", "氏名");
 echo \html_writer::tag("th", "メールアドレス");
@@ -81,13 +80,14 @@ echo \html_writer::end_tag("tr");
 $users = $assignObj->users();
 foreach ($users as $user) {
     $user_submission = $assignObj->get_user_submission($user->id, false);
-    $onlinetext = $assignObj->get_onlinetext_submission($user_submission->id);
+    if($user_submission){
+        $onlinetext = $assignObj->get_onlinetext_submission($user_submission->id);
+    }
     $grade = $assignObj->get_user_grade($user->id, true);
     if ((int)$grade->grade == -1) {
         $grade->grade = "";
     }
     echo \html_writer::start_tag("tr");
-    echo \html_writer::tag("td", \html_writer::empty_tag("input", ["type" => "checkbox"]));
     echo \html_writer::tag("td",
         \html_writer::div($OUTPUT->user_picture($user,
             ['size' => 40, 'class' => 'img-circle', "link" => false, "alttext" => false]),
@@ -96,11 +96,11 @@ foreach ($users as $user) {
     echo \html_writer::tag("td", fullname($user));
     echo \html_writer::tag("td", $user->email);
 
-    if($user_submission && !$onlinetext){
+    if(!$user_submission){
         echo \html_writer::tag("td",
             \html_writer::div("未提出"));
         echo \html_writer::tag("td", "(採点できません)");
-    }elseif($user_submission && $onlinetext) {
+    }elseif($user_submission && $onlinetext){
         echo \html_writer::tag("td",
             \html_writer::div($onlinetext->onlinetext));
         echo \html_writer::tag("td",
@@ -115,13 +115,18 @@ foreach ($users as $user) {
                     "cmid" => $cmid
                 ])
         );
-    }else{
+    }elseif($user_submission && !$onlinetext){
         echo \html_writer::tag("td",
-            \html_writer::div("オンラインテキスト以外"));
+            \html_writer::div("(オンラインテキストで提出されていません。)"));
         echo \html_writer::tag("td",
             \html_writer::empty_tag("input",
                 ["type" => "text", "name" => "grade_" . $user->id, "value" => $grade->grade])
         );
+    }else{
+        echo \html_writer::tag("td",
+            \html_writer::div(""));
+        echo \html_writer::tag("td",
+            \html_writer::div(""));
     }
     echo \html_writer::end_tag("tr");
 }
