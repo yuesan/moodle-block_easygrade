@@ -23,11 +23,6 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['blockstring'] = 'Block string';
-$string['descconfig'] = 'Description of the config section';
-$string['descfoo'] = 'Config description';
-$string['headerconfig'] = 'Config section header';
-$string['labelfoo'] = 'Config label';
 $string['easygrade:addinstance'] = 'Add a easygrade block';
 $string['easygrade:myaddinstance'] = 'Add a easygrade block to my moodle';
 $string['pluginname'] = 'easygrade';
