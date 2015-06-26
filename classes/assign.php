@@ -10,17 +10,6 @@ class assign extends \assign
     private $course;
 
     /**
-     * コース内の課題オブジェクトを全て取得する
-     *
-     * @return array
-     * @throws \coding_exception
-     */
-    public function assigns()
-    {
-        return get_all_instances_in_course("assign", $this->course);
-    }
-
-    /**
      * コース内に登録されているユーザーを取得する。
      *
      * @return array

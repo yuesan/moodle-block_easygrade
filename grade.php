@@ -82,6 +82,8 @@ foreach ($users as $user) {
     $user_submission = $assignObj->get_user_submission($user->id, false);
     if($user_submission){
         $onlinetext = $assignObj->get_onlinetext_submission($user_submission->id);
+    }else{
+        $onlinetext = false;
     }
     $grade = $assignObj->get_user_grade($user->id, true);
     if ((int)$grade->grade == -1) {

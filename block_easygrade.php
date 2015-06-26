@@ -68,14 +68,14 @@ class block_easygrade extends block_base
 
     public function applicable_formats()
     {
-        return array(
+        return [
             'all' => false,
             'site' => false,
             'site-index' => false,
             'course-view' => true,
             'course-view-social' => false,
             'mod' => false
-        );
+        ];
     }
 
     public function instance_allow_multiple()
